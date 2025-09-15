@@ -1,0 +1,69 @@
+# 工作流名称
+name: Deploy to GitHub Pages
+
+# 触发条件：推送到main或master分支时运行
+on:
+  push:
+    branches: [ main, master ]
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+# 设置工作流权限，允许部署到GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 工作流运行环境
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # 构建和部署作业
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：检出代码
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # 步骤2：设置Node.js环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm' # 使用pnpm缓存
+      
+      # 步骤3：安装pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      
+      # 步骤4：安装依赖
+      - name: Install dependencies
+        run: pnpm install
+      
+      # 步骤5：构建项目
+      - name: Build
+        run: pnpm run build
+      
+      # 步骤6：设置GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      # 步骤7：上传构建产物
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 上传dist目录作为GitHub Pages的构建产物
+          path: './dist'
+      
+      # 步骤8：部署到GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

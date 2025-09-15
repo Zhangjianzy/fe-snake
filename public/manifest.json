@@ -1,0 +1,18 @@
+{
+  "name": "贪吃蛇游戏",
+  "short_name": "贪吃蛇",
+  "description": "经典的贪吃蛇游戏，支持方向键和WASD控制，具有分数系统和游戏难度调整功能。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "lang": "zh-CN"
+}
