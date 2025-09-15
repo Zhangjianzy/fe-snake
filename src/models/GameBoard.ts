@@ -1,7 +1,7 @@
-import { Point } from './Point';
-import { Direction } from './Direction';
 import { Snake } from './Snake';
 import { Food } from './Food';
+import { Point } from './Point';
+import { Direction } from './Direction';
 
 /**
  * 游戏状态枚举
@@ -120,24 +120,28 @@ export class GameBoard {
   /**
    * 游戏主循环更新
    */
+  // 修改update方法，增加调试日志并优化食物检测逻辑
   update(): void {
     if (this.status !== GameStatus.PLAYING) {
       return;
     }
-
+  
     // 移动蛇
     this.snake.move();
-
+  
     // 检查碰撞
     if (this.checkWallCollision() || this.snake.isCollidingWithSelf()) {
       this.status = GameStatus.GAME_OVER;
       return;
     }
-
-    // 检查是否吃到食物
-    if (this.snake.head.equals(this.food.getPosition())) {
+  
+    // 检查是否吃到食物 - 优化检测逻辑
+    const foodPosition = this.food.getPosition();
+    if (this.snake.head.x === foodPosition.x && this.snake.head.y === foodPosition.y) {
+      // 确保增长逻辑正确执行
       this.snake.grow();
       this.score += 10;
+      // 立即生成新食物
       this.food = this.generateFood();
     }
   }

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { GameBoard, GameStatus } from '../models/GameBoard';
-import { Point } from '../models/Point';
 import { useI18n } from '../i18n/I18nContext';
 
 interface SnakeCanvasRendererProps {
@@ -72,6 +71,7 @@ const SnakeCanvasRenderer: React.FC<SnakeCanvasRendererProps> = ({
       ctx.strokeRect(x, y, cellSize, cellSize);
     });
 
+    // 在渲染方法中增加食物位置的可视化反馈
     // 绘制食物
     const food = gameBoard.getFood();
     if (food) {
@@ -79,8 +79,14 @@ const SnakeCanvasRenderer: React.FC<SnakeCanvasRendererProps> = ({
       const x = foodPosition.x * cellSize;
       const y = foodPosition.y * cellSize;
       
+      // 增加食物的视觉效果，使其更容易被识别
       ctx.fillStyle = '#f44336'; // 食物红色
       ctx.fillRect(x, y, cellSize, cellSize);
+      
+      // 增加食物边框
+      ctx.strokeStyle = '#b71c1c';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, cellSize, cellSize);
     }
 
     // 绘制游戏状态文本
@@ -114,15 +120,20 @@ const SnakeCanvasRenderer: React.FC<SnakeCanvasRendererProps> = ({
   };
 
   // 当游戏状态变化时重新渲染
+  // 在React组件中添加useEffect来同步渲染
   useEffect(() => {
-    const interval = setInterval(() => {
+    // 创建一个单独的渲染循环，确保只在游戏状态变化时渲染
+    const renderLoop = () => {
       render();
-    }, 16); // 约60fps
-
-    return () => {
-      clearInterval(interval);
+      requestAnimationFrame(renderLoop);
     };
-  }, [gameBoard, cellSize, width, height, t]);
+    
+    const animationId = requestAnimationFrame(renderLoop);
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, [gameBoard]); // 只在gameBoard变化时重新设置渲染循环
 
   return (
     <canvas

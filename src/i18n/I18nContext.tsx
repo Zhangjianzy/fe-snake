@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { locales, defaultLocale } from './locales';
 import type { Locale, TranslationKeys } from './locales';
 
@@ -40,6 +40,11 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
 
   // 获取所有可用语言
   const availableLocales = Object.values(locales);
+
+  // 添加 useEffect 钩子，当语言变化时更新页面标题
+  useEffect(() => {
+    document.title = currentLocale.translations.gameTitle;
+  }, [currentLocale]);
 
   return (
     <I18nContext.Provider value={{ locale: currentLocale, t, changeLocale, availableLocales }}>

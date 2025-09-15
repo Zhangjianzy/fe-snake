@@ -1,5 +1,5 @@
-import { Point } from './Point';
 import { Direction } from './Direction';
+import { Point } from './Point';
 
 /**
  * 表示游戏中的蛇
@@ -57,30 +57,31 @@ export class Snake {
   /**
    * 移动蛇
    */
+  // 优化move方法，确保每次移动都是整数格子
   move(): void {
     // 更新当前方向
     this.direction = this.nextDirection;
-
-    // 创建新的头部
+  
+    // 创建新的头部 - 确保坐标始终为整数
     const newHead = this.head.clone();
     switch (this.direction) {
       case Direction.UP:
-        newHead.y -= 1;
+        newHead.y = Math.floor(newHead.y - 1); // 确保是整数
         break;
       case Direction.DOWN:
-        newHead.y += 1;
+        newHead.y = Math.floor(newHead.y + 1);
         break;
       case Direction.LEFT:
-        newHead.x -= 1;
+        newHead.x = Math.floor(newHead.x - 1);
         break;
       case Direction.RIGHT:
-        newHead.x += 1;
+        newHead.x = Math.floor(newHead.x + 1);
         break;
     }
-
+  
     // 将新头部添加到身体前面
     this.body.unshift(newHead);
-
+  
     // 如果不是在增长，则移除尾部
     if (!this.isGrowing) {
       this.body.pop();

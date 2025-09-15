@@ -1,5 +1,5 @@
-import { Direction } from '../models/Direction';
 import { GameBoard, GameStatus } from '../models/GameBoard';
+import { Direction } from '../models/Direction';
 
 /**
  * 游戏控制器，连接模型和视图
@@ -7,7 +7,7 @@ import { GameBoard, GameStatus } from '../models/GameBoard';
 export class GameController {
   private gameBoard: GameBoard;
   private animationId: number | null = null;
-  private speed: number = 150; // 游戏速度（毫秒）
+  private speed: number = 300; // 游戏速度（毫秒）
   private lastUpdateTime: number = 0;
 
   /**
@@ -40,15 +40,20 @@ export class GameController {
   /**
    * 游戏主循环
    */
+  // 修改gameLoop方法，确保游戏状态更新和渲染同步
   private gameLoop(timestamp: number = 0): void {
+    // 确保timestamp有值
+    const currentTime = timestamp || performance.now();
+    
     // 基于时间间隔更新游戏状态
-    if (timestamp - this.lastUpdateTime > this.speed) {
+    if (currentTime - this.lastUpdateTime > this.speed) {
+      // 只在达到速度阈值时更新游戏状态
       this.gameBoard.update();
-      this.lastUpdateTime = timestamp;
+      this.lastUpdateTime = currentTime;
     }
-
-    // 继续游戏循环
-    this.animationId = requestAnimationFrame(this.gameLoop);
+    
+    // 继续游戏循环，但不传递时间戳
+    this.animationId = requestAnimationFrame(() => this.gameLoop());
   }
 
   /**

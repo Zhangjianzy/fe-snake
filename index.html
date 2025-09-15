@@ -1,22 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>贪吃蛇游戏</title>
-    <!-- PWA 相关配置 -->
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#3b82f6" />
-    <meta name="description" content="经典的贪吃蛇游戏，支持方向键和WASD控制，具有分数系统和游戏难度调整功能。" />
-    <!-- 移动设备特定配置 -->
+    <title>经典贪吃蛇游戏 - 免费在线HTML5游戏 | 支持键盘控制和分数系统</title>
+    <!-- 核心SEO meta标签 -->
+    <meta name="description" content="经典贪吃蛇游戏在线玩 - 免费HTML5游戏，支持方向键和WASD控制，具有实时分数系统、游戏难度调整功能和排行榜。简单易上手，适合休闲娱乐！" />
+    <meta name="keywords" content="贪吃蛇游戏,在线贪吃蛇,免费HTML5游戏,经典游戏,休闲游戏,街机游戏" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="贪吃蛇游戏团队" />
+    <!-- 移动端优化 -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="贪吃蛇" />
-    <link rel="apple-touch-icon" href="/vite.svg" />
-    <!-- Windows 设备特定配置 -->
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <!-- PWA 相关配置 -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#3b82f6" />
     <meta name="msapplication-TileColor" content="#3b82f6" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "贪吃蛇游戏",
+      "description": "经典贪吃蛇游戏在线玩 - 免费HTML5游戏，支持方向键和WASD控制，具有实时分数系统、游戏难度调整功能和排行榜。",
+      "url": "/",
+      "genre": "休闲游戏",
+      "interactivityType": "键盘控制",
+      "character": [
+        {
+          "@type": "Thing",
+          "name": "蛇"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

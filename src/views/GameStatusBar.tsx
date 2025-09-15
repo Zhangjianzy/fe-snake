@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GameBoard, GameStatus } from '../models/GameBoard';
 import { useI18n } from '../i18n/I18nContext';
 
@@ -16,8 +16,28 @@ const GameStatusBar: React.FC<GameStatusBarProps> = ({
   onResetGame,
 }) => {
   const { t } = useI18n();
-  const status = gameBoard.getStatus();
-  const score = gameBoard.getScore();
+  
+  // 使用useState保存分数和状态，这样React可以追踪变化
+  const [score, setScore] = useState<number>(0);
+  const [status, setStatus] = useState<GameStatus>(GameStatus.READY);
+
+  // 使用useEffect监听游戏状态和分数的变化
+  useEffect(() => {
+    // 初始设置
+    setScore(gameBoard.getScore());
+    setStatus(gameBoard.getStatus());
+    
+    // 创建一个定时器，定期检查分数和状态的变化
+    const updateInterval = setInterval(() => {
+      setScore(gameBoard.getScore());
+      setStatus(gameBoard.getStatus());
+    }, 100); // 每100毫秒检查一次
+    
+    // 清理函数
+    return () => {
+      clearInterval(updateInterval);
+    };
+  }, [gameBoard]); // 依赖项数组包含gameBoard
 
   const getStatusText = (): string => {
     switch (status) {

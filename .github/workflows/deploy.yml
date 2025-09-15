@@ -10,9 +10,7 @@ on:
 
 # 设置工作流权限，允许部署到GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # 工作流运行环境
 concurrency:
