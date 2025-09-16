@@ -1,0 +1,25 @@
+{
+  "name": "贪吃蛇游戏",
+  "short_name": "贪吃蛇",
+  "description": "经典贪吃蛇游戏在线玩 - 免费HTML5游戏，支持方向键和WASD控制，具有实时分数系统、游戏难度调整功能和排行榜。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "lang": "zh-CN",
+  "categories": ["game", "entertainment"]
+}
